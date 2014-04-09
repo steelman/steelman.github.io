@@ -1,0 +1,240 @@
+#+BEGIN_HTML
+---
+layout: post
+title: Designing a cyclinonic separator
+date: 2014-03-13T12:36:08+0100
+---
+#+END_HTML
+How to design and make a cyclone separator.
+
+There is a [[http://www.atterberry.net/funstuff/cyclone-dust-separator-for-shop-vac/][number]] [[http://www.i3detroit.org/pcb-mill-dust-collection-system/][of]] [[http://lumberjocks.com/SimonSKL/blog/10097][pages]] on the Internet describing the process of
+building a [[https://en.wikipedia.org/wiki/Cyclonic_separation][cyclonic separator]]. [[http://billpentz.com/woodworking/cyclone/cyclone_plan.cfm][Some]] of them even provide some maths
+and a quite detailed plan if you need a unit capable of taking you to
+the Moon. If, however, you'd like a small unit that can help prevent
+your home vacuum clenaer from clogging while you drill a hole to hang
+a painting, you may feel a little deserted. I did too. I wanted to
+know how much material I needed to build the thing and to check if a
+slightly resized design still fits the sheet I had. Last but not
+least, I wanted a nice flat template to cut out the inlet which, if
+you think about it, is a strange shape. So I took my tools and started
+hacking.
+
+* The shape
+
+First I created an [[http://openscad.org/][OpenSCAD]] script to visualise a hollow cone.
+
+#+BEGIN_HTML
+{% highlight text %}
+/* -*- mode: scad; c-basic-offset: 4; c-file-style: "k&r"; indent-tabs-mode: nil -*- */
+/* All measurements are in milimeters */
+
+top_diameter=200;
+bottom_diameter=100;
+height=300;
+inlet_diameter = 40;
+
+/* internal variables */
+$fn=50;
+inlet_radius  =  inlet_diameter / 2;
+top_radius    =    top_diameter / 2;
+bottom_radius = bottom_diameter / 2;
+tga           = (top_radius - bottom_radius) / height;
+total_height  = top_radius / tga;
+bottom_height = total_height - height;
+
+/* inlet position */
+inlet_vertical_position = total_height-inlet_diameter * 1.5 ;
+inlet_horizontal_position = inlet_vertical_position * tga - inlet_radius*1.1;
+inlet_position = [0,inlet_horizontal_position,inlet_vertical_position];
+inlet_angle = 80;
+
+difference() {
+    /* the cyclone */
+    translate([0,0,bottom_height])
+        cylinder(r1=bottom_radius, r2=top_radius, h=height);
+    /* remove the inside */
+    translate([0,0,4])
+        cylinder(r1=0, r2=top_radius, h=total_height);
+    /* cut in half at y = 0 and x > 0 */
+    rotate([0,0,0])
+	translate([-top_radius - 10,-0.5,-10])
+        cube([top_radius + 10,1,total_height+20]);
+    /* the inlet */
+    translate(inlet_position)
+	rotate([0,inlet_angle,0])
+        cylinder(r=inlet_radius, h=top_diameter);
+}
+{% endhighlight %}
+#+END_HTML
+
+#+CAPTION: The cone of cyclonic separator.
+[[/assets/2014-03-15-cyclone.png]]
+
+Looks nice but still does not help much in cutting. Let's iron it.
+
+
+
+* The template
+
+  With the above design exported as STL file we can start trying to
+  make it flat. STL is a very simple file format and luckily there is
+  a great [[https://github.com/nophead/Mendel90/blob/master/c14n_stl.py][script]] by [[http://hydraraptor.blogspot.com/][nophead]] to parse it. Once parsed the shape needs
+  to be transformed so that the surface of the cone becomes flat. This
+  is what the =conexform()= function in the code below is for.
+  Remember to copy actual dimensions of the cone used in the scad file
+  or the transformation may yeild quite weird results.
+
+#+BEGIN_HTML
+{% highlight python %}
+#!/usr/bin/env python
+#
+# Transform the 3D cyclone model as exported from cyclone.scad into a
+# flat shape for conversion into DXF. 
+#
+import sys
+
+class Vertex:
+    def __init__(self, x, y, z):
+        self.x, self.y, self.z = x, y, z
+        self.key = (float(x), float(y), float(z))
+
+    def transform(self, f):
+        x, y, z = f(self.x, self.y, self.z)
+        self.x, self.y, self.z = x, y, z
+        self.key = (float(x), float(y), float(z))
+
+class Normal:
+    def __init__(self, dx, dy, dz):
+        self.dx, self.dy, self.dz = dx, dy, dz
+
+class Facet:
+    def __init__(self, normal, v1, v2, v3):
+        self.normal = normal
+        if v1.key < v2.key:
+            if v1.key < v3.key:
+                self.vertices = (v1, v2, v3)    #v1 is the smallest
+            else:
+                self.vertices = (v3, v1, v2)    #v3 is the smallest
+        else:
+            if v2.key < v3.key:
+                self.vertices = (v2, v3, v1)    #v2 is the smallest
+            else:
+                self.vertices = (v3, v1, v2)    #v3 is the smallest
+
+    def key(self):
+        return (self.vertices[0].x, self.vertices[0].y, self.vertices[0].z,
+                self.vertices[1].x, self.vertices[1].y, self.vertices[1].z,
+                self.vertices[2].x, self.vertices[2].y, self.vertices[2].z)
+
+    def transform(self, f):
+        for v in self.vertices:
+            v.transform(f)
+
+class STL:
+    def __init__(self, fname):
+        self.facets = []
+
+        f = open(fname)
+        words = [s.strip() for s in f.read().split()]
+        f.close()
+
+        if words[0] == 'solid':
+            i = words.index('facet')
+	    self.name = " ".join(words[1:i])
+            while words[i] == 'facet':
+                norm = Normal(words[i + 2],  words[i + 3],  words[i + 4])
+                v1   = Vertex(words[i + 8],  words[i + 9],  words[i + 10])
+                v2   = Vertex(words[i + 12], words[i + 13], words[i + 14])
+                v3   = Vertex(words[i + 16], words[i + 17], words[i + 18])
+                i += 21
+                self.facets.append(Facet(norm, v1, v2, v3))
+        else:
+            print "Not an OpenSCAD ascii STL file"
+            sys.exit(1)
+
+    def canonicalise(self):
+        self.facets.sort(key = Facet.key)
+
+    def transform(self, f):
+        for facet in self.facets:
+            facet.transform(f)
+
+    def write(self, fname):
+        f = open(fname,"wt")
+        print >> f,'solid ' + self.name
+        for facet in self.facets:
+            print >> f, '  facet normal %s %s %s' % (facet.normal.dx, facet.normal.dy, facet.normal.dz)
+            print >> f, '    outer loop'
+            for vertex in facet.vertices:
+                print >> f, '      vertex %s %s %s' % (vertex.x, vertex.y, vertex.z)
+            print  >> f, '    endloop'
+            print  >> f, '  endfacet'
+        print >> f, 'endsolid ' + self.name
+        f.close()
+
+import math
+from math import pi,sqrt
+
+top_diameter=200.;
+bottom_diameter=120.;
+height=400.;
+
+top_radius    =    top_diameter / 2;
+bottom_radius = bottom_diameter / 2;
+tga           = (top_radius - bottom_radius) / height;
+total_height  = top_radius / tga;
+bottom_height = total_height - height;
+
+side_length   = sqrt(total_height*total_height + top_radius*top_radius)
+flat_a = 2*pi * top_radius / side_length
+sina   = top_radius / side_length
+
+def conexform(x, y, z):
+    x, y, z = float(x), float(y), float(z)
+    nx, ny, nz = 0.0, 0.0, 0.0
+
+    r1 = math.sqrt(x*x + y*y)
+    r2 =  r1 / sina
+    phi = flat_a * (math.atan2(y,x) ) / (2*pi)
+
+    nx = r2 * math.cos(phi)
+    ny = r2 * math.sin(phi)
+    nz = (z * top_radius/total_height) - r1
+
+    nx, ny, nz = str(nx), str(ny), str(nz)
+    return (nx, ny, nz)
+
+def deconify(fname):
+    stl = STL(fname)
+    stl.transform(conexform)
+    stl.canonicalise()
+    stl.write("flat-" + fname)
+
+if __name__ == '__main__':
+    if len(sys.argv) == 2:
+        deconify(sys.argv[1])
+    else:
+        print "usage: deconify file"
+        sys.exit(1)
+{% endhighlight %}
+#+END_HTML
+
+  When a "flat" stl file is ready. We need to import it to OpenSCAD
+  once again to convert it to DXF for further work. This is quite a simple task
+
+#+BEGIN_HTML
+{% highlight text %}
+projection(cut=true)
+translate([-153,0,-0.2])
+rotate([0,0,29.59181771496431])
+import(file="flat-cyclone.stl");
+{% endhighlight %}
+#+END_HTML
+
+  The numeric arguments for rotation and translation above match the
+  values used to create the cone. If you change cones size you need to
+  adjust them. After pressing =F6= in OpenSCAD we get a nice 2D shape
+  that can be exported as DXF.
+  
+#+CAPTION: A flat surface of the cone ready to be cut.
+[[/assets/2014-03-15-flat-cyclone.png]]

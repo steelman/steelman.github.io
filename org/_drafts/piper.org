@@ -1,0 +1,23 @@
+#+BEGIN_HTML
+---
+layout: post
+title: Piper 3J
+---
+#+END_HTML
+
+
+| Produkt              |   Cena | Url                                                                       |
+|----------------------+--------+---------------------------------------------------------------------------|
+| Turnigy 9X V2        | 398.00 | http://cyber-fly.pl/pl/p/Aparatura-Turnigy-9X-V2-2.4-GHz-9-kanalowa-/3141 |
+| Ładowarka Redox LiPo |  39.90 | http://cyber-fly.pl/pl/p/Ladowarka-Redox-LiPo-230V/3730                   |
+
+
+| Prod                     | Cena | Url                                                                  |
+|--------------------------+------+----------------------------------------------------------------------|
+| Regulator                |      |                                                                      |
+| Silinik                  |      |                                                                      |
+| Akumulator               | 48.44 | http://cyber-fly.pl/pl/p/Redox-1100-mAh-11%2C1V-20C-pakiet-LiPo/2951 |
+| Śmigło                   |      |                                                                      |
+| serwo x4                 |      |                                                                      |
+| pasta/prop-saver         | 7.50 | http://cyber-fly.pl/pl/p/PIASTA-NA-SMIGLA-GWS-NA-OS-3-mm/151         |
+| wtyczka pakiet/regulator |      |                                                                      |

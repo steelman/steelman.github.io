@@ -1,0 +1,14 @@
+#+BEGIN_HTML
+---
+layout: post
+title: Keeping books on an IVAR shelf
+date: 2014-03-19T21:22:16+0100
+---
+#+END_HTML
+
+There is a [[http://www.thinkgeek.com/product/e9cc/?srp%3D31][great]] [[http://www.ikea.com/us/en/catalog/products/76690106/][number]] [[http://ampelmannshop.com/epages/Ampelmann.sf/en_GB/?ObjectPath%3D/Shops/Ampelmann/Products/0103301200][of]] [[http://ampelmannshop.com/epages/Ampelmann.sf/en_GB/?ObjectPath%3D/Shops/Ampelmann/Products/0103301100][book-ends]] [[http://www.thingiverse.com/thing:176729][out]] there to keep books upright.
+If, however, one keeps their on a great IKEA IVAR rack then, unless
+the wall behind the rack is streight, a book or two will fall from
+time to time behind the rack. The solution to this problem is quite
+trivial, I admit, although it took me some time to come up with its
+final form. A plank, with four notches.
