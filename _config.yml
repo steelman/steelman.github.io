@@ -1,0 +1,5 @@
+name: Assorted stuff
+markdown: redcarpet
+pygments: true
+exclude:
+  - org
