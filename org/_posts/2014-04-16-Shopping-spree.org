@@ -1,0 +1,74 @@
+#+BEGIN_HTML
+---
+title: Shopping spree
+layout: post
+categories:
+  - planes
+  - sport trainer
+date: 2014-04-16T20:48:05+0200
+---
+#+END_HTML
+
+My wallet got significantly lighter today, although I tried hard to
+get as much as possible. For the last several weeks I've been writing
+[[https://gist.github.com/steelman/10193501/ffb49a0032c8c19b5586eb870d5ac941280902bd][this scirpt]] (don't follow the link, it is still a very scruffy
+version) to optimise my expenses. The script takes a BOM and a list of
+products available in shops and tries to find a subset of products
+that provides all materials needed (BOM) *and* is the cheapest
+including shipping. The first version I conceived was O(2^n) CPU-wise,
+where n is the number products. With n around 40 this problem becomes
+practically unsolvable (at least in Python).
+
+The second approch was made possible by a teammate of mine who gave me
+a dynamic programming algorithm that flips the problem and makes it
+O(p * 2^m), where p is the number of products and m number of BOM
+entries (times the amount of materials, e.g. ten servos of the same
+kind increase m by 10 unless you declare that shops provide them in
+10-packs). The first version of this alogrithm didn't count shipping
+(which may significantly change the solution, I saw it after my
+running my binary tree traversal algorithm for about twenty four
+hours). Unfortunately adding vendor-dependent shipping costs means (at
+least now) iterating over all subsets of vendors (2^v). The script
+finishis its job in about two hours and with some more work it could
+run in parallel but it still can't be declared scalable. I am going to
+build a few other things this year and hopefully I will find some time
+to improve the script (we've alread got an idea of an algorithm being
+quite fast though a lot more memory hungry).
+
+This post was supposed to be about the plane(s) I am going to build
+and not about the software I wirte. Let's what I am going to find in
+my mailbox soon.
+
+| Product                                        |    Price |
+|------------------------------------------------+----------|
+|                                                |      <r> |
+| [[http://abc-rc.pl/Serwo-Abc-Power-S-9][SERVO: ABC-Power S-9]] (x10)                     |  24.47 € |
+| [[http://abc-rc.pl/p/2/1439/-model-falcon-epp-morlock--modele-z-epp-i-epo-samoloty-i-szybowce.html][Falcon EPP - Morlock]]                           |  17.56 € |
+| [[http://www.abc-rc.pl/ABC-Power-ESC-30A][ESC: ABC-Power 30A 2-3S]]                        |   9.28 € |
+| [[http://abc-rc.pl/ABC-Power-ESC-Program-Cart][ABC-Power ESC Programmer]]                       |   4.51 € |
+| [[http://abc-rc.pl/GOLD-3-5mm][GOLD 3,5 mm]] (x10)                              |   2.86 € |
+| [[http://abc-rc.pl/p/106/3309/piasta-prop-saver-gemfan-3mm-5-5mm-i-7mm-dwustronna-piasty-prop-saver-piasty-do-smigiel-smigla-i-akcesoria.html][PROPSAVER: Gemfan 3mm/5,5mm/7mm two-sided]] (x2) |   1.38 € |
+| abc-rc shipping                                |   3.82 € |
+| [[http://www.karambol.pl/product-pol-4923-aparatura-Turnigy-9x-odbiornik-2-4GHz-mode-2.html][APARATURA: Turnigy 9x]]                          |  72.99 € |
+| karambol.pl shipping                           |   1.67 € |
+| [[http://cyber-fly.pl/pl/p/Akumulator-LiPol-1300mAh-3S-20-30C-Turnigy/3137][CELLS: LiPol 1300mAh 3S 20-30C Turnigy]] (x3)    |  32.91 € |
+| [[http://cyber-fly.pl/pl/p/Redox-ALPHA-v2-Ladowarka-zasilacz/2073][CHARGER: Redox ALPHA v2 + PSU]]                  |  25.04 € |
+| [[http://cyber-fly.pl/pl/p/EMAX-CF2822/1870][MOTOR: EMAX CF2822]] (x2)                        |  20.94 € |
+| [[http://cyber-fly.pl/pl/p/Model-rzutka-Dragonfly-45/4116][Dragonfly 45 (glider)]][fn:1]                        |   5.96 € |
+| [[http://cyber-fly.pl/pl/p/Zlacze-XT60/2081][XT60]]  (x4)                                     |   4.38 € |
+| [[http://cyber-fly.pl/pl/p/PRZYSPIESZACZ-DO-KLEJOW-CA/108][CA KICKER: 200 ml Joker]]                        |   2.86 € |
+| [[http://cyber-fly.pl/pl/p/Klej-cyjanoakrylowy-sredni-20-ml-Joker/1533][CA GLUE: 20 ml Joker]]      (x2)                 |   2.86 € |
+| [[http://cyber-fly.pl/pl/p/GWS-9x5/1519][PROPELLER: GWS 9x5]] (x3)                        |   2.68 € |
+| [[http://cyber-fly.pl/pl/p/Dzwignia-steru-13%252C5-x-16-mm/3156][HORN: Control horn 13,5x16 mm]] (x10)            |   1.48 € |
+| cyber-fly shipping                             |   3.58 € |
+|------------------------------------------------+----------|
+| TOTAL                                          | 241.22 € |
+
+This isn't exactly what Mikey was promising ($10 RC plane). I suppose,
+however, he's got sutff worth a lot more thant taht in his drawers.
+
+* Footnotes
+
+[fn:1] I'll make a [[http://makezine.com/projects/make-38-cameras-and-av/rc-remote-drop-mechanism/][remote drop mechanism]] to release it after pulling
+it up in the air.
+
