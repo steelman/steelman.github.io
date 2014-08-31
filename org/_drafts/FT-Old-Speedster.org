@@ -1,0 +1,42 @@
+#+BEGIN_HTML
+---
+layout: post
+title: FT Old Speedster
+date: 2014-08-30T10:40:18+0200
+categories: planes
+---
+#+END_HTML
+
+After several, more or less successful, attempts of building FT planes
+I decided to get my hands on [[http://flitetest.com/articles/ft-old-speedster-build][FT Old Speedster]]. I wanted a really slow
+flyer because all the space I can find outside my window is a not so
+large [[http://www.openstreetmap.org/#map%3D16/52.2129/21.0114][football field]] and a few smaller lawns. Warsaw is a nice green
+city where most green are leavs on trees. Flying slow means flying low
+too which reduces all kinds of risks of lying in a [[http://en.wikipedia.org/wiki/Control_zone][CTR]] of [[http://en.wikipedia.org/wiki/Fr%C3%A9d%C3%A9ric_Chopin][Frédéric
+Chopin]] [[http://en.wikipedia.org/wiki/Warsaw_Chopin_Airport][airport]].
+
+After using [[http://www.display.3acomposites.com/en/produkty/foam-x/cechy.html][FOAM-X]] for FT Flyer and finding out it is way to heavy for
+that design (although I really like it for its rigidity), and learning
+that [[http://www.depronfoam.com/index.html][Depron]] works great for FT Nutball (although it's a bit too
+expensive to be cheap) I decided to try out something new. I found 5
+mm thick [[http://www.cezar.eu/?str%3D4&n%3D19&p%3D129][Cezar Expert Mat]]. At about 1.20 €/m² I consider it cheap
+compared to almost 5 €/m² for Depron at my local hobby shop and they
+both are just [[http://en.wikipedia.org/wiki/Polystyrene#Extruded_polystyrene_foam][XPS]]. There are some differences, however, Cezar XPS is
+between half and one millimetre thinner, it's not as flat as Depron, a
+bit more brittle and it's blue what makes paints look a bit different.
+It also melts in lower temperature and you need to be careful with hot
+glue, put some on one piece, wait a few seconds and maybe spread the
+glue with a popsicle stick before attaching to pieces together.
+
+Building a plane is rather straightforward if you watched the build
+video. The only difference is due to lack of paper which holds hinges
+and A/B folds together, nothing your favourite sticky tape along the
+cuts can't fix. I chose to laser cut the foam and can say it works
+fine (although it was not cheap, but I was in a hurry). If you choose
+to paint your aircraft instead of using decals I recommend doing it
+brefore you glue it together. Since there is no paper you don't have
+to use Minwax (any European cheap alternative?) but you nead to avoid
+nitro-based paints. I still had some grean and orange [[http://chemmot.com.pl/products_en/decoration.html][Deco Color]] paint
+I had used before and it works fine with XPS.
+
+
