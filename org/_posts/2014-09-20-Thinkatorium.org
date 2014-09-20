@@ -1,0 +1,89 @@
+#+BEGIN_HTML
+---
+layout: post
+title: Thinkatorium
+date: 2014-09-20T22:22:31+0200
+categories:
+  - places
+---
+#+END_HTML
+
+[[http://www.kopernik.org.pl/en/][Copernicus Science Centre in Warsaw]] has always been a place open for
+everyone who is interested in science and how it can be applied in
+practice. There is a lot interactive exhibits for all ages (the
+youngest visitors love the [[http://www.kopernik.org.pl/en/exhibitions/buzzz-gallery/][Buzzz!]] gallery). A few months ago the
+Centre hosted the [[http://makezine.com/2014/02/15/makerland-three-days-of-hardware-hacking-in-warsaw/][Makerland]], a conference for makers.
+
+Last Thursday the Centre has opened [[http://www.kopernik.org.pl/en/exhibitions/thinkatorium/][Thinkatorium]][fn:1], a place where
+everyone can learn to hack simply by starting hacking. There are going
+to be desks, tools and materials. "There is no deadline, no specific
+instructions, and the solution is unknown." That's how it's been
+advertised. I really wondered what does it mean so I decided to visit
+the place today.
+
+The room is on the first floor (the first above the ground floor) and
+it is hard to miss it thanks to a clear sign above the door.
+
+#+CAPTION: Welcome to Thinkatorium
+[[/assets/2014-09-20/20140920-132959-IMG_0979.JPG]]
+
+Right behind the door there is a board with yellow pages. They contain
+different tasks for visitors. There are topics of tasks, difficulty
+level (lower right corner) and expected time required (lower left).
+This means there isn't complete anarchy. Those who have never hacked
+before may have problems answering two questions at the same time.
+What to do? How to do it?
+
+#+CAPTION: Kanban
+[[/assets/2014-09-20/20140920-161316-IMG_0994.JPG]]
+
+#+CAPTION: "Wareshelf"
+[[/assets/2014-09-20/20140920-133107-IMG_0980.JPG]]
+
+I chose "The Tower" and got appropriately labelled toolbox from the "wareshelf".
+
+#+CAPTION: The toolbox
+[[/assets/2014-09-20/20140920-151006-IMG_0984.JPG]]
+
+In the toolbox there were: one pair of scissors, two staplers,
+drinking straws, a quite heavy orange ball and a leaflet describing
+the goal. The goal was to build a tower that would withstand the ball
+put on its top for one minute.
+
+#+CAPTION: Instruction manual
+[[/assets/2014-09-20/20140920-151117-IMG_0985.JPG]]
+
+#+CAPTION: Work in progress
+[[/assets/2014-09-20/20140920-152006-IMG_0986.JPG]]
+
+The little fellow helped with with the stapler every time I said
+"squeeze" and after a quarter the first tower was ready.
+
+#+CAPTION: Achievement
+[[/assets/2014-09-20/20140920-152318-IMG_0989.JPG]]
+
+The next attempt took us significantly longer. After no less than
+twenty squeezes my assistant was a bit tired and I had to make the
+final fixes myself.
+
+#+CAPTION: Take #2
+[[/assets/2014-09-20/20140920-160316-IMG_0991.JPG]]
+
+The other tasks I saw people working on were "Melting" and "Shadows"
+There were also some pieces of pool-noodles stuck on barbecue skewers
+flying in a vertical wind tunnel.
+
+#+CAPTION: Melting
+[[/assets/2014-09-20/20140920-133143-IMG_0982.JPG]]
+
+#+CAPTION: Shadows
+[[/assets/2014-09-20/20140920-160449-IMG_0993.JPG]]
+
+Experienced hackers may find the tasks and toolboxes a bit limited
+and/or limiting, however, this simplicity may help them introduce
+others to tinkering as a way of solving everyday problems.
+ 
+* Footnotes
+
+[fn:1] Actually "Tinkertorium" might be more accurate translation of
+       the Polish "Majsternia".
