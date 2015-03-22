@@ -1,0 +1,99 @@
+#+BEGIN_HTML
+---
+layout: post
+title: NSA 325v2
+date: 2015-03-19T21:59:21+0100
+categories:
+  - devices
+---
+#+END_HTML
+
+I have decided to buy a NAS quite some time ago. After several
+attempts to make a decision: "which one", I finally bought [[http://www.zyxel.com/products_services/nsa325_v2.shtml][Zyxel's NSA
+325 v2]]. At a little bit less than 100 €, with its spec it seems like the
+the best bang for the buck now.
+
+"The bang" for me is primary ability to run software of my choice
+instead of some crappy image created by a poor engineer trying to feed
+the management beast. Although it seems *BSD support Marvel's Kirkwood
+SoCs, and I do recognise *BSD as excellent server systems, I have
+decided to go "safe" and took the path I know best, that is Linux. It
+seems the mainline kernel has everything that is needed to use the
+hardware at its full potential. If that is not enough, Philipp
+Kirchhofer, added a few commits to the mainline v3.18, and [[https://github.com/pkirchhofer/nsa325-linux-upstream][published]]
+it on github. Philipp's code is based on v3.18.7, to be precise, but
+it can be rebased without any conflicts to v3.18.9. So far so good.
+
+* Day 1
+
+Since I haven't developed anything for ARM on my desktop Gentoo PC, I
+had to install the toolchain. As you may expect it wasn't as quick as
+=apt-get install gcc-arm-linux-gnueabi= but Gentoo's =crossdev -t
+arm-linux-gnueabi -s1= isn't too difficult either. Next, some less
+obvious stuff begins.
+
+#+BEGIN_SRC sh
+  export ARCH=arm
+  export CROSS_COMPILE=arm-linux-gnueabi-
+  make nsa325_defconfig
+  make menuconfig          # iff you think you know what you're doing
+  make nsa325
+#+END_SRC
+
+Suddenly!
+
+#+BEGIN_EXAMPLE
+    Kernel: arch/arm/boot/zImage is ready
+    DTC     arch/arm/boot/dts/kirkwood-nsa325.dtb
+  cat arch/arm/boot/zImage arch/arm/boot/dts/kirkwood-nsa325.dtb > zImage-dtb
+  mkimage -A arm -O linux -T kernel -C none -a 0x00008000 -e 0x00008000 \
+    -n Linux-3.18.9 -d zImage-dtb uImage-dtb
+  make: mkimage: Command not found
+  Makefile:1234: recipe for target 'nsa325' failed
+  make: *** [nsa325] Error 127
+#+END_EXAMPLE
+
+What a shame! I need to install dev-embedded/u-boot-tools to get
+=mkimage(1)= to finally get a fresh and tasty kernel.
+
+#+BEGIN_EXAMPLE
+  Image Name:   Linux-3.18.9
+  Created:      Thu Mar 19 22:23:55 2015
+  Image Type:   ARM Linux Kernel Image (uncompressed)
+  Data Size:    2155228 Bytes = 2104.71 kB = 2.06 MB
+  Load Address: 00008000
+  Entry Point:  00008000
+#+END_EXAMPLE
+
+All right, I have to clean up my desk a bit to have any space to
+disassemble the device to get to the serial console. No, today's not
+the day.
+
+* Day 2
+
+To manipulate the firmware of the NSA 325 v2 I am going to need to
+access its [[http://zyxel.nas-central.org/wiki/Serial_port_%2528NSA325%2529][serial console]] (UART). It's not possible to attach it to an
+RS232-to-USB converter directly because the port works on 3.3V TTL
+levels (0 V - 3.3 V), while RS232 port requires much higher voltage
+amplitude (-12 V - +12 V). I've got a converter based on MAX3232,
+which in accepts V_cc between 3 V and 5.5 V and outputs ±5.4 on the
+RS-232 side. It works just fine with TP-Link's [[http://wiki.openwrt.org/toh/tp-link/tl-wr1043nd][TL-WR1043ND]] (v1.x)
+which also has 3.3 V TTL UART. This is a custom circuit so the
+picture below is just for my reference. Tx/Rx on the TTL side are
+named from the standpoint of the DTE attached to RS-232 side.
+
+#+BEGIN_SRC picture
+         +----------------------+          
+         |                      |          
+         |                      |          
+  Vcc    |--+                   |--+       
+  GND    |--+                   |  |       
+  Tx    <|--+                   |  | RS-232
+         |  + (GND)             |  |       
+  Rx    >|--+                   |--+       
+         |                      |          
+         |                      |          
+         +----------------------+          
+#+END_SRC 
+
+To be continued…
