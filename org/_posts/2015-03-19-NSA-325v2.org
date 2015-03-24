@@ -24,7 +24,7 @@ Kirchhofer, added a few commits to the mainline v3.18, and [[https://github.com/
 it on github. Philipp's code is based on v3.18.7, to be precise, but
 it can be rebased without any conflicts to v3.18.9. So far so good.
 
-* Day 1
+* Day one
 
 Since I haven't developed anything for ARM on my desktop Gentoo PC, I
 had to install the toolchain. As you may expect it wasn't as quick as
@@ -69,7 +69,7 @@ All right, I have to clean up my desk a bit to have any space to
 disassemble the device to get to the serial console. No, today's not
 the day.
 
-* Day 2
+* Day two
 
 To manipulate the firmware of the NSA 325 v2 I am going to need to
 access its [[http://zyxel.nas-central.org/wiki/Serial_port_%2528NSA325%2529][serial console]] (UART). It's not possible to attach it to an
@@ -95,5 +95,34 @@ named from the standpoint of the DTE attached to RS-232 side.
          |                      |          
          +----------------------+          
 #+END_SRC 
+
+* Day three
+
+Yesterday I disassembled the box (the photos coming as soon as I find
+a convenient way to publish them here). The serial port is on the
+"upper" edge of the board and a five pin plug. It also needs to be
+bent 90° outwards of the PCB, otherwise the plug won't fit between the
+PCB and the HDD frame.
+
+As soon as I had my box assembled again, I sat down to build a basic
+Debian rootfs. Fortunately this isn't hard and is actually quite well
+[[https://wiki.debian.org/EmDebian/CrossDebootstrap][documented]]. I chose the QEMU method, which basicly boils down to
+issuing three commands. Before you can run the third one, make sure
+you have set up your [[https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/tree/Documentation/binfmt_misc.txt?id%3Dbfa76d49576599a4b9f9b7a71f23d73d6dcff735][binfmt_misc]] bindings correctly. Otherwise, you
+won't be able to run ARM binaries on your PC which is actually
+required to complete the installation of Debian packages.
+
+#+BEGIN_SRC sh
+  debootstrap --foreign --arch armel --variant minbase wheezy rootfs
+  cp /usr/bin/qemu-arm-static ./rootfs/usr/bin
+  DEBIAN_FRONTEND=noninteractive \
+    DEBCONF_NONINTERACTIVE_SEEN=true \
+    LC_ALL=C LANGUAGE=C LANG=C \
+    chroot rootfs /debootstrap/debootstrap --second-stage
+#+END_SRC
+
+To make things more funny i decided to use [[http://www.ansible.com][Ansible]] to manage the
+configuration of my NAS starting with the playbook for building the
+rootfs. I will publish it when it's ready.
 
 To be continued…
