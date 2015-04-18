@@ -1,0 +1,33 @@
+#+BEGIN_HTML
+---
+layout: post
+title: Economy is not physics
+date: 2015-04-18T11:52:58+0200
+categories:
+  - non-tech
+---
+#+END_HTML
+
+This sentence[fn:1] seems to have vast and sometimes not well understood
+consequences. I'll try to collecto some thoughts here.
+
+1. There is no such thing as law of economy. There are rules which are
+   not completely random and they work in *most* cases, and taht is
+   all. I've learnt about that at my economy classess so I assume this
+   is not a surprise for anyone who attended one too.
+
+2. People *can* change the rules. Although many rulse result from
+   others somewhat automatically, some still can be changed. For
+   example: it costs money to borrow money for a period of time. Some
+   may say it is impossible to forbid taking money for lending money.
+   They are wrong, at least those who, at the same time, agree with me
+   that it is good to punish for bribery.
+
+3. Physicists should not be allowed to work in banks. At least not
+   until they take and some social science courses to learn that they
+   are going to deal with people and not with falling apples.
+
+* Footnotes
+
+[fn:1] As of today (2015-04-18) DuckDuckGo [[https://duckduckgo.com/?q%3D%2522Economy%2Bis%2Bnot%2Bphysics%2522][shows only six hits]] for
+this exact phrase. Google, only [[https://encrypted.google.com/search?q%3D%2522Economy%2Bis%2Bnot%2Bphysics%2522][five]].
