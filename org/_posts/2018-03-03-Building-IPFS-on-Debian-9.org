@@ -1,0 +1,58 @@
+#+BEGIN_HTML
+---
+layout: post
+title: Building IPFS on Debian 9 (stretch)
+date: 2018-03-03T15:21:44+01:00
+categories:
+  - software
+---
+#+END_HTML
+
+Recently my teammate told us about IPFS. It caught my attention,
+because I read about it before in this [[https://blog.mozilla.org/addons/2018/01/26/extensions-firefox-59/][post]]. It seems like an
+interesting idea to crossbreed git and Bittorrent.
+
+The project hasn't reached a stable state yet and it seems that none
+of the major Linux distributions package it downstream. Building it
+isn't too hard, but on my Debian 9 machin isn't trivial either. Debian
+stretch provides Go, which is the language of choice of IPFS
+developers, but it's only Go 1.7 (1.8 in stretch-backports) and IPFS
+requires Go 1.9.
+
+So let's go step-by-step .
+
+1. ~apt-get install golang-go~. This installs Go 1.7, which is needed to build Go 1.9.
+2. Download [[https://packages.debian.org/source/buster/golang-1.9][golang-1.9]] sources for Debian buster.
+3. Build the packages the ususal way (~dpkg-source -x~ and ~dpkg-buildpackage~).
+4. Install them.
+
+Here is where tweaking begins. First you need to set environment
+variables to make Go 1.9 the default.
+
+#+BEGIN_SRC sh
+mkdir $HOME/.go
+export GOPATH=$HOME/.go:/usr/lib/go-1.9/
+export PATH=/usr/lib/go-1.9/bin/:$PATH
+#+END_SRC
+
+At this point you can start following the instructions from the IPFS
+README.md file to download and build ipfs on your machine.
+
+#+BEGIN_SRC sh
+go get -u -d github.com/ipfs/go-ipfs
+cd $HOME/.go/src/github.com/ipfs/go-ipfs
+make build
+#+END_SRC
+
+Several go packages are required to build IPFS and they are downloaded
+automatically using [[https://github.com/whyrusleeping/gx][gx]] package manager, which is a very interesting
+piece of software itself.
+
+When everything is ready ~make install~ and you've got ~ipfs~ binary
+in ~$HOME/.go/bin~. Don't forget to add this directory to your ~PATH~.
+
+Now the fun part begins: reading. I will definitely help if you
+already know how git works internally, but you need to lear how to do
+stuff with ~ipfs~ sub-commands. Aside from the official [[https://github.com/ipfs/ipfs][IPFS papers]]
+and [[https://ipfs.io/docs/][documentation]] I strongly recommend reading [[https://medium.com/@ConsenSys/an-introduction-to-ipfs-9bba4860abd0][An Introduction to
+IPFS]].
